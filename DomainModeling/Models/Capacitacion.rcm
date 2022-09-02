@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<classModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="8ee843c7-0d59-4434-b23e-acc231d9295e" name="Capacitacion" module="Capacitacion" mappingSettings="" binModel="FT:A8/2.0 SV:Icinetic.Core.Model.ClassModel.ClassModelRoot/1.0 TS:2017-06-22T17:44:05.7542985-04:00 PL:H4sIAAAAAAAEAL1V23LbNhB9jr9C4+diBsSFACbTB1uWLdux5PjSpulkPCCwkOlQpCKSvmXyZX3oJ/UXupQvgix3JuOHPvCBu0ue3XMWB//89Xe/sHV9VHkoTqqq6cHJ8e9NOTSf8v5o4/vGu33f+7W3qQG04E4R6qUhQnBBMsaBWOcYT7xhRsLm+413IzuFrr5vZ9blDT5V+RSvMfSQfEbsUoOyncLcNlhZY/bPLxhbVMDiFW6ZmbTDeq8YjLrU1mQyh8lq+WkDc6iauxk8hX5sLH7Ri79eTmM11y5VlFjtcBonJE6TUcJMpg0IZY3k8TRbRTstqy6CXbfFqxOeT4t+VVTzLjeqygUbg9sZuAb8cTVri0XLmO1t0s31nmHvZAdu7sSkGR3+0oN2bPJvzWB3ej/Ct/FQ7/RvbvsfVZe73b7O6nM+a8dHC0KaZp5nbfP4n6/7bLR9tXf1sT3C2pEMw9sjcbpdd19mZX5FhzvXf7QH3Zfj2UveT/MHfiwTKk2BAE2QH6syklFPSZYYbwEz3OnNjuTlEL14gCXTgmnDtHUkk84TwRUnOrOGBCptkirP0sTGTNtHdaELdInfbNFGGtRrsBFTS9hUssxxJomxLhCBY5DMAWILbbwxYGVQMWydl5MCzmxWwKm7hKldgfZZtQYbSRJN620aPKREqhR5S5glRmpLQEnrLS6bBBrD+ryeFfZubdbe91E1zeZQ/1jDjcRf4iYgEx64JyEoiXr5hFjFNfGpV1oFA1KmKyy3TbUHZac+7Hsom7y5W2ngbN7CAvp5uXrxYi2RIaFSc6NIpoxDfS1aAtCA8DowKZFsLmLkx7m60Fk3T8c9IpSTxZHI77tIQmm31kVR3dSjtigwFGxRAwb36/My/7bo8TlUergFH0Venqz+pwG9uJ5uU9GdJf3hppnuXwzOPh98eUluVBmNyJhE62PEKZqiWUhPMqCS6JSHTFvNZKZXyfV5Myi7XfKvkxpDRu1Ee8S9UcwHYiBFSCoF0VQnJEgXnAIwqQsxpKvKkC90tMUK5G5HyUshI09YQnKFh9ugBwbKEiJYYMQw7ogTWvFUKC7NygptzaAocl/9v1JeiWroC6GPDzs7g+DEOWfjr/PRmpRR5XLIjGbgAd1MGkA3ktISbWFxUmViDRhJw9uljNpZQnqbKMqRSJYJ5FUHtMIMjUl7hNc6aMHg7VJGhr6EVAk1lieMMEoBZ9PoezKROLRQuL48pOmK+e2Cu7QjvMimOeIurrmtIrf1c67nobeafxLco4E0+YN7/bfkDbL1VsVl+nn3APhlsf+hO7wXl8Px9L5i8nBN8agyckbFUhmQAZUK5ELZlBi8/AneRlQpnwJeZT+lePPq4V22EyluGDq9EMQoNEKB1x1eAujN3koqmafUGvZTiodnxf8Flb7BWqYJAAA=" xmlns="http://schemas.microsoft.com/dsltools/RadarcClassModel">
+  <extendedProperties>
+</extendedProperties>
+  <classes>
+    <classModelRootHasClasses Id="97c7d784-144c-479c-b607-317694ba2aa7">
+      <class Id="a838c670-a8c9-4c45-b2b0-29b89e47a953" name="Alumno" umlColor="None" lifeTimeInfo="None" expectedPopulation="0">
+        <extendedProperties>
+name_1="singleTableSchema" type_1="System.String" value_1="dbo" usage_1="class" 
+name_2="displayName" type_2="System.String" value_2=" {Nombres}" usage_2="class" 
+name_3="autoGenerateIdentity" type_3="System.Boolean" value_3="True" usage_3="class" 
+</extendedProperties>
+        <attributes>
+          <classHasAttributes Id="f2ba3186-84be-4488-b014-bbe12a10bfe7">
+            <attribute Id="e1058397-b79c-43ae-ae0f-a78f2559d934" name="Nombres" allowsNull="false" indexed="false" isUnique="false" nameAndType="Nombres : string(100)" validation="">
+              <extendedProperties>
+name_1="auditEnabled" type_1="System.Boolean" value_1="True" usage_1="property" 
+name_2="confidential" type_2="System.Boolean" value_2="False" usage_2="property" 
+</extendedProperties>
+            </attribute>
+          </classHasAttributes>
+          <classHasAttributes Id="bc1118c8-19c9-4fbf-afa6-fc622e48d59c">
+            <attribute Id="37b199b0-f021-42f2-923c-c48736473596" name="Apellidos" allowsNull="false" indexed="false" isUnique="false" nameAndType="Apellidos : string(100)" validation="">
+              <extendedProperties>
+name_1="auditEnabled" type_1="System.Boolean" value_1="True" usage_1="property" 
+name_2="confidential" type_2="System.Boolean" value_2="False" usage_2="property" 
+</extendedProperties>
+            </attribute>
+          </classHasAttributes>
+          <classHasAttributes Id="1c351d22-e542-4489-9f91-cfa65f939f68">
+            <attribute Id="7109a312-200e-4183-8515-59474c53f667" name="FechaNacimiento" type="datetime" alias="Fecha de Nacimiento" allowsNull="true" indexed="false" isUnique="false" nameAndType="FechaNacimiento : datetime?" validation="">
+              <extendedProperties>
+name_1="auditEnabled" type_1="System.Boolean" value_1="true" usage_1="property" 
+name_2="confidential" type_2="System.Boolean" value_2="false" usage_2="property" 
+</extendedProperties>
+            </attribute>
+          </classHasAttributes>
+        </attributes>
+        <stereotypes>
+          <classHasStereotypes Id="f987a728-961f-4933-a255-ad08a80f7db7">
+            <stereotype Id="428928ac-b5cd-4373-8ba9-f05a167d261a" name="aggregateName" value="Alumnos" nameAndValue="&lt;&lt;aggregateName(Alumnos)&gt;&gt;" />
+          </classHasStereotypes>
+        </stereotypes>
+      </class>
+    </classModelRootHasClasses>
+  </classes>
+</classModelRoot>

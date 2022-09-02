@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<classModelDiagram dslVersion="1.0.0.0" Id="11080512-72c8-4bd7-8132-20db719780ca" absoluteBounds="0, 0, 11, 8.5" name="Capacitacion">
+  <classModelRootMoniker Id="8ee843c7-0d59-4434-b23e-acc231d9295e" />
+  <nestedChildShapes>
+    <classCompartmentShape Id="19fb66f7-d558-4a88-a29e-5ac9ff35f217" absoluteBounds="3.875, 2.375, 2, 1.7811149088541658" fillColor="White">
+      <classMoniker name="/8ee843c7-0d59-4434-b23e-acc231d9295e/Alumno" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e1c84819-ad29-404f-ac68-0de2e9981269" absoluteBounds="3.89, 2.685, 1.9700000000000002, 0.35856119791666663" name="Stereotypes" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="6b4f5588-1643-4619-8928-ce70248ed590" absoluteBounds="3.89, 3.0535611979166664, 1.9700000000000002, 0.7431640625" name="Attributes" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f9debf31-9349-4103-adaf-3b3936a38ac9" isExpanded="false" absoluteBounds="3.89, 3.8067252604166666, 1.9700000000000002, 0.2493896484375" name="Operations" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classCompartmentShape>
+  </nestedChildShapes>
+</classModelDiagram>

@@ -1,0 +1,5 @@
+.fileupload-container { width: 350px; }
+.fileupload-result,
+.fileupload-progressbar {
+    width: 150px;
+}

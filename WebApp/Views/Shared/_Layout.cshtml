@@ -1,0 +1,112 @@
+﻿@using System.Configuration
+@using Unir.Architecture.SuperTypes.PresentationBase.ConfigSections
+@using Unir.Architecture.SuperTypes.PresentationBase.Views
+@using Unir.ErpAcademico.WebCapacitaciones.Globalization;
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>@_LayoutStrings.Title @(!string.IsNullOrEmpty(ViewBag.Title) ? " - " + ViewBag.Title : "")</title>
+    <!--STYLES-->
+    <link href="@Url.ContentCache("Content/utils/reset.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.ContentCache("Content/utils/jqueryui/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    @*Responsive*@
+    <link href="@Url.ContentCache("Content/utils/datatable/jquery.dataTables.min.css")" rel="stylesheet" />
+    <link href="@Url.ContentCache("Content/utils/datatable/jquery.dataTables_themeroller.css")" rel="stylesheet" />
+    <link href="@Url.ContentCache("Content/utils/datatable/dataTables.responsive.css")" rel="stylesheet" />
+
+    <link href="@Url.ContentCache("Content/utils/fullcalendar/fullcalendar.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.ContentCache("Content/utils/timepicker/jquery.timepicker.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.ContentCache("Content/utils/combo-multiselect.css")" rel="stylesheet" type="text/css" />
+    <!--[if (gt IE 8) | (IEMobile)]><!-->
+    <link href="@Url.ContentCache("Content/utils/unsemantic/unsemantic-grid-responsive.css")" rel="stylesheet" type="text/css" />
+    <!--<![endif]-->
+    <!--[if (lt IE 9) & (!IEMobile)]>
+        <link href="@Url.ContentCache("Content/utils/unsemantic/ie.css")" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    @RenderSection("Stylesheet", required: false)
+    <link href="@Url.ContentCache("Content/utils/utils.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.ContentCache("Content/base.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.ContentNoCache("~/Content/app.css")" rel="stylesheet" type="text/css" />
+    <!--SCRIPTS-->
+    @Html.RenderGlobalConfiguration()
+    @Html.RenderPrivilegesConfiguration()
+
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/jquery.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/jquery-ui.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/jquery.ui.datepicker-es.js")"></script>
+    @*Responsive*@
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/jquery.dataTables.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/dataTables.responsive.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/ColVis.modified.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/jquery.blockUI.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/json.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/json2.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/jquery.maskedinput.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/fullcalendar.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/date.format.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/date.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/autoNumeric.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/jquery.store.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/jquery.textchange.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/jquery.timepicker.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/combo-multiselect.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/validator.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/utils.js")"></script>
+    <script type="text/javascript" src="@Url.ContentCache("Scripts/utils/adapt.js")"></script>
+
+    <!-- Globalización. Mantener el orden -->
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/cldrjs/cldr.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/cldrjs/cldr/event.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/cldrjs/cldr/supplemental.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/globalize/globalize.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/globalize/globalize/message.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/globalize/globalize/number.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/globalize/globalize/plural.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/globalize/globalize/date.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/globalize/globalize/currency.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/globalize/globalize/relative-time.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/utils/globalization/legacy.js")"></script>
+    <!-- Carga de CLDR -->
+    @Html.RenderCldrResources()
+    <!-- ************************************** -->
+    <script type="text/javascript" src="@Url.Content("~/Scripts/app.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/moment.js")"></script>
+
+    @Html.RenderGlobalizationMessages(typeof(Unir.Architecture.SuperTypes.PresentationBase.Resources.ScriptsCommonStrings))
+
+    @RenderSection("JavaScript", required: false)
+</head>
+    <body>
+		<div id="main-wrapper" class="grid-container">
+            <div id="header">
+                <div class="box-logo">
+                    <img src="@Url.ContentNoCache("images/logo-unir.png")" alt="UNIR" title="UNIR" width="192" height="59" />
+                </div>
+                <p class="mensaje">@_LayoutStrings.TextHeader</p>
+                <ul class="box-current-user">
+                    <li class="usuario">@Html.Partial("~/ComponentsViews/Authorization/AccountVisualIdentity.cshtml")</li>
+                </ul>
+            </div>
+            <div id="main-menu" class="clearfix ui-widget-header">
+                <ul class="active">
+                    <li><a href="/Alumno/List">@ViewsStrings.TextAlumnos</a></li>
+                </ul>
+            </div>
+            <div id="body">
+                <h1>@ViewBag.TitlePage</h1>
+                <div class="content">
+                    @RenderBody()
+                </div>
+            </div>
+            <div id="footer">
+                <span>@_LayoutStrings.TextFooter</span>
+                <div class="box-build">@(((PresentationConfigSection) ConfigurationManager.GetSection("presentation")).Views.VersionBuild)</div>
+            </div>
+        </div>
+    </body>
+</html>
