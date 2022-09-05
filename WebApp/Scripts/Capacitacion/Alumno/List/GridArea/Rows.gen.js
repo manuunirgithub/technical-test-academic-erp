@@ -11,13 +11,14 @@ function createAlumnoGridRow(rowData) {
     row.push('<input type="checkbox" />');
 
 	row.push('<span title="' + rowData.Id + '">' + summary(rowData.Id.toString(), 20, '...') + '</span>');
-	row.push('<span title="' + rowData.Nombres + '">' + summary(rowData.Nombres, 20, '...') + '</span>');
-	row.push('<span title="' + rowData.Apellidos + '">' + summary(rowData.Apellidos, 20, '...') + '</span>');
     if (rowData.FechaNacimiento) {
-		row.push(Globalize.formatDateUsingMask(Globalize.parseDateISOString(rowData.FechaNacimiento)));
+        row.push(Globalize.formatDateUsingMask(Globalize.parseDateISOString(rowData.FechaNacimiento)));
     } else {
         row.push('');
     }
+    row.push('<span title="' + rowData.Nombres + '">' + summary(rowData.Nombres, 20, '...') + '</span>');
+	row.push('<span title="' + rowData.Apellidos + '">' + summary(rowData.Apellidos, 20, '...') + '</span>');
+   
     row.push('<span class="btn-opciones">' + Globalize.formatMessage('TextOptions') + '</span>');
 
     return row;

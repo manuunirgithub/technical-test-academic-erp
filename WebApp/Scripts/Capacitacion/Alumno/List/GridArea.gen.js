@@ -9,11 +9,14 @@
 function loadAlumnosDataGrid() {
     pageData.tbAlumnos = $('#tb-alumnos');
     // **********************************************************
-    $('#btn-search').click(function() {
+    $('#btn-search').click(function () {
         pageData.tbAlumnos.table('update');
     });
     // **********************************************************
+
+    //var errors = new Array();
     loadAlumnosFilterState();
+
     pageData.tbAlumnos.table($.extend({}, {
         oColVis: {
             buttonText: Globalize.formatMessage('TextColumnVisualization'),
@@ -25,9 +28,9 @@ function loadAlumnosDataGrid() {
         bServerSide: true,
         fnRowCallback: alumnoGridRowCallback,
         sAjaxSource: appData.siteUrl + 'api/v1/alumnos/advanced-search',
-        fnServerData: function(sSource, aoData, fnCallback) {
+        fnServerData: function (sSource, aoData, fnCallback) {
             var paramsTabla = new Object();
-            $.each(aoData, function(index, value) {
+            $.each(aoData, function (index, value) {
                 paramsTabla[value.name] = value.value;
             });
 
@@ -35,55 +38,71 @@ function loadAlumnosDataGrid() {
 
             $('#chk-alumnos-all').prop('checked', false);
             pageData.tbAlumnos.table('block');
-			
-            $.ajax({
-                url: sSource,
-                data: $.toJSON(params),
-				type: 'POST',
-                success: function(data, status, xhr) {
-					var rows = [];
-					pageData.tbAlumnos.table('unblock');
-					
-					$.each(data, function(index, value) {
-						rows.push(createAlumnoGridRow(value));
-					});
-					fnCallback({
-						sEcho: paramsTabla.sEcho,
-						aaData: rows,
-						iTotalRecords: data.length,
-						iTotalDisplayRecords: xhr.getResponseHeader("X-TotalElements")
-					});
 
-					pageData.tbAlumnos.table('setData', data);
-                },
-                error: function (xhr) {
-                    pageData.tbAlumnos.table('unblock');
-					if (xhr.status !== 500) {
-						var result = $.parseJSON(xhr.responseText);
-						showErrors(result.Errors);
-					} else {
-						showApplicationFatalErrorMessage();
-					}
-                }				
-            });
+            let errors = new Array();
+            existsDateFrom = !isNull(params.FilterFechaNacimientoFrom);
+            existsDateTo = !isNull(params.FilterFechaNacimientoTo);
+            if (existsDateFrom && existsDateTo
+                && params.FilterFechaNacimientoFrom > params.FilterFechaNacimientoTo) {
+                errors.push(Globalize.formatMessage("ErrorFechaNacimientoFueraRango"));
+            }
+            //validateAlumnFilters(params, errors);
+
+            if (!errors.length) {
+                $.ajax({
+                    url: sSource,
+                    data: $.toJSON(params),
+                    type: 'POST',
+                    success: function (data, status, xhr) {
+                        var rows = [];
+                        pageData.tbAlumnos.table('unblock');
+
+                        $.each(data, function (index, value) {
+                            rows.push(createAlumnoGridRow(value));
+                        });
+                        fnCallback({
+                            sEcho: paramsTabla.sEcho,
+                            aaData: rows,
+                            iTotalRecords: data.length,
+                            iTotalDisplayRecords: xhr.getResponseHeader("X-TotalElements")
+                        });
+
+                        pageData.tbAlumnos.table('setData', data);
+                    },
+                    error: function (xhr) {
+                        pageData.tbAlumnos.table('unblock');
+                        if (xhr.status !== 500) {
+                            var result = $.parseJSON(xhr.responseText);
+                            showErrors(result.Errors);
+                        } else {
+                            showApplicationFatalErrorMessage();
+                        }
+                    }
+                });
+            } else {
+                pageData.tbAlumnos.table('unblock');
+                showErrors(errors);
+            }
+            
         }
-    },{
-        iDisplayLength: !isNull(pageData.AlumnosMainListParams.ItemsPerPage) 
-                            ? pageData.AlumnosMainListParams.ItemsPerPage
-                            : parseInt(appData.itemsPerPage.split('|')[0]),
+    }, {
+        iDisplayLength: !isNull(pageData.AlumnosMainListParams.ItemsPerPage)
+            ? pageData.AlumnosMainListParams.ItemsPerPage
+            : parseInt(appData.itemsPerPage.split('|')[0]),
         aaSorting: [[
             !isNull(pageData.AlumnosMainListParams.OrderColumnPosition) ? pageData.AlumnosMainListParams.OrderColumnPosition : 1,
             !isNull(pageData.AlumnosMainListParams.OrderDirection) ? pageData.AlumnosMainListParams.OrderDirection : 'asc']],
         iDisplayStart: (!isNull(pageData.AlumnosMainListParams.ItemsPerPage) && !isNull(pageData.AlumnosMainListParams.PageIndex))
-					? ((pageData.AlumnosMainListParams.PageIndex - 1) * pageData.AlumnosMainListParams.ItemsPerPage)
-					: 0
+            ? ((pageData.AlumnosMainListParams.PageIndex - 1) * pageData.AlumnosMainListParams.ItemsPerPage)
+            : 0
     }));
 
-    $('#chk-alumnos-all').click(function() {
+    $('#chk-alumnos-all').click(function () {
         if (this.checked) {
             $(':checkbox', pageData.tbAlumnos.table('getRows')).prop('checked', true);
         } else {
             $(':checkbox', pageData.tbAlumnos.table('getRows')).prop('checked', false);
         }
     });
+    
 }

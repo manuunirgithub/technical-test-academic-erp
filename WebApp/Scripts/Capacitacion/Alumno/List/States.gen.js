@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 function loadAlumnosFilterState() {
     var data = pageData.AlumnosMainListParams;
+    let existsDateFrom = false, existsDateTo = false;
     if (!isNull(data)) {
         if (!isNull(data.FilterNombres)) {
             $("#txt-nombres").val(data.FilterNombres);
@@ -15,12 +16,18 @@ function loadAlumnosFilterState() {
         if (!isNull(data.FilterApellidos)) {
             $("#txt-apellidos").val(data.FilterApellidos);
         }
-        if (!isNull(data.FilterFechaNacimientoFrom)) {
-            $('#txt-fecha-nacimiento-from').datepicker('setDate', Globalize.parseDateISOString(data.FilterFechaNacimientoFrom));
+        existsDateFrom = isNull(data.FilterFechaNacimientoFrom);
+        existsDateTo = isNull(data.FilterFechaNacimientoTo);
+        if (!existsDateFrom) {
+            $('#txt-fecha-nacimiento-from')
+                .datepicker('setDate', Globalize.parseDateISOString(data.FilterFechaNacimientoFrom));
         }
-        if (!isNull(data.FilterFechaNacimientoTo)) {
-            $('#txt-fecha-nacimiento-to').datepicker('setDate', Globalize.parseDateISOString(data.FilterFechaNacimientoTo));
+        if (!existsDateTo) {
+            $('#txt-fecha-nacimiento-to')
+                .datepicker('setDate', Globalize.parseDateISOString(data.FilterFechaNacimientoTo));
         }
+
+       
     }
 
 }

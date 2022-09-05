@@ -40,8 +40,7 @@ function getAlumnosFilterParameters() {
     params.FilterNombres = $('#txt-nombres').val().trim();
     params.FilterApellidos = $('#txt-apellidos').val().trim();
     params.FilterNombresApellidos = $('#txt-nombresapellidos').val().trim();
-    debugger;
-
+    
 
     // Rangos date time
     params.FilterFechaNacimientoFrom = $('#txt-fecha-nacimiento-from').val().isEmpty()

@@ -24,7 +24,16 @@ namespace Unir.ErpAcademico.DomainModules.Capacitacion.Aggregates.Alumnos
 
         public override DomainObjectValidationResult Validate()
         {
-            return base.Validate();
+            var result= base.Validate();
+
+            if (FechaNacimiento.Value.Year < 1990)
+            {
+                result.AddValidationError("Fecha de nacimiento no puede ser menor al año 1990");
+            }
+            return result;
+                
         }
+
+
     }
 }

@@ -107,6 +107,15 @@ namespace Unir.ErpAcademico.WebCapacitaciones.Globalization.Capacitacion.Scripts
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La Fecha [Desde] debe ser menor o igual a la Fecha [Hasta].
+        /// </summary>
+        public static string ErrorFechaNacimientoFueraRango {
+            get {
+                return ResourceManager.GetString("ErrorFechaNacimientoFueraRango", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Debe seleccionar al menos un registro.
         /// </summary>
         public static string ErrorNoAlumnoSeleccionado {

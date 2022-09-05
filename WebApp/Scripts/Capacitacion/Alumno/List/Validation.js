@@ -5,14 +5,20 @@
 //     Changes to this file may cause incorrect behavior and will be lost if the code is regenerated. 
 //     If you want to extend or modify the code use the designated extension points / user escapes as described in the product documentation.
 // </auto-generated>
+
+
 //------------------------------------------------------------------------------
-function validateAlumno(params, errors) {
-    if (params.Nombres.isEmpty()) {
-        errors.push(Globalize.formatMessage("ErrorNoNombres"));
+
+
+
+function validateAlumnFilters(params, errors) {
+    debugger;
+    existsDateFrom = !isNull(params.FilterFechaNacimientoFrom);
+    existsDateTo = !isNull(params.FilterFechaNacimientoTo);
+    if (existsDateFrom && existsDateTo
+        && params.FilterFechaNacimientoFrom > params.FilterFechaNacimientoTo) {
+        errors.push(Globalize.formatMessage("ErrorFechaNacimientoFueraRango"));
     }
-    if (params.Apellidos.isEmpty()) {
-        errors.push(Globalize.formatMessage("ErrorNoApellidos"));
-    }
-    
-    
+
+
 }

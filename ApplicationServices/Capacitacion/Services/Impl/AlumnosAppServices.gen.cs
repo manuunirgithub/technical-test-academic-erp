@@ -23,10 +23,10 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
 {
     public class AlumnosAppServicesBase : CommonApplicationServices
     {
-		protected IAlumnosRepository RepoAlumnos { get { return RepositoryResolver.Resolve<IAlumnosRepository>(); } }
+        protected IAlumnosRepository RepoAlumnos { get { return RepositoryResolver.Resolve<IAlumnosRepository>(); } }
 
         #region Alumnos
-		
+
         #region Lectura
 
         public virtual ResultListDto<AlumnoDto> GetPagedAlumnos(AlumnosListSpecification specification)
@@ -34,7 +34,7 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
             var result = new ResultListDto<AlumnoDto>();
 
             var lista = RepoAlumnos.GetPagedFiltered(specification);
-           
+
             if (lista != null)
             {
                 result.Elements = lista.Elements;
@@ -44,7 +44,7 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
 
             return result;
         }
-		
+
         public virtual ResultSingleDto<AlumnoDto> GetAlumno(int idAlumno)
         {
             var result = new ResultSingleDto<AlumnoDto>();
@@ -52,7 +52,7 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
             var alumno = RepoAlumnos.Get(idAlumno);
             if (alumno == null)
             {
-				result.Type = ResultType.ElementNotFound;
+                result.Type = ResultType.ElementNotFound;
                 result.Errors.Add(AlumnosStrings.ErrorNoAlumno);
             }
             else
@@ -66,24 +66,30 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
         #endregion Lectura
 
         #region Persistencia
-		
+
         public virtual ResultSingleDto<AlumnoDto> NewAlumno(AlumnoDto alumno)
         {
             var result = new ResultSingleDto<AlumnoDto>();
             var unitOfWork = RepoAlumnos.UnitOfWork;
 
             var alumnoNew = new Alumno
-                {
-                    Nombres = alumno.Nombres,
-                    Apellidos = alumno.Apellidos,
-                    FechaNacimiento = alumno.FechaNacimiento,
-                };
+            {
+                Nombres = alumno.Nombres,
+                Apellidos = alumno.Apellidos,
+                FechaNacimiento = alumno.FechaNacimiento,
+            };
 
             // Finalmente hacer las validaciones de Dominio (Definidas en las Entidades)
             var domainValidation = alumnoNew.Validate();
-            if (domainValidation.HasErrors)
+            bool existName = RepoAlumnos.GetFiltered(x => x.Nombres.ToLower().Equals(alumno.Nombres.ToLower())).HasAny();
+            if (domainValidation.HasErrors || existName)
             {
-				result.Type = ResultType.ElementConflict;
+                if (existName)
+                {
+                    domainValidation.AddValidationError($"El Nombre: {alumno.Nombres} fue registrado anteriormente, ingrese otro nombre.");
+                }
+                result.Type = ResultType.ElementConflict;
+
                 result.LoadFromDomainResult(domainValidation);
                 return result;
             }
@@ -99,10 +105,12 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
 
             unitOfWork.Commit();
             result.Element = alumnoNew.ProjectedAs<AlumnoDto>();
-			result.Type = ResultType.ElementCreated;
+            result.Type = ResultType.ElementCreated;
 
             return result;
         }
+
+
 
         public virtual ResultValidation ModifyAlumno(AlumnoDto alumno)
         {
@@ -114,15 +122,15 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
             var persisted = RepoAlumnos.Get(alumno.Id);
             if (persisted == null)
             {
-				result.Type = ResultType.ElementNotFound;
-				result.Errors.Add(AlumnosStrings.ErrorNoAlumno);
+                result.Type = ResultType.ElementNotFound;
+                result.Errors.Add(AlumnosStrings.ErrorNoAlumno);
                 return result;
             }
 
             // Acciones personalizadas previas a la asignación nuevos valores.
             ModifyAlumnoPreAssign(alumno, persisted);
-			
-			// Asignar los valores.
+
+            // Asignar los valores.
             persisted.Nombres = alumno.Nombres;
             persisted.Apellidos = alumno.Apellidos;
             persisted.FechaNacimiento = alumno.FechaNacimiento;
@@ -131,7 +139,7 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
             var domainValidation = persisted.Validate();
             if (domainValidation.HasErrors)
             {
-				result.Type = ResultType.ElementConflict;
+                result.Type = ResultType.ElementConflict;
                 result.LoadFromDomainResult(domainValidation);
                 return result;
             }
@@ -153,33 +161,33 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
             var unirOfWork = RepoAlumnos.UnitOfWork;
 
             var deleted = new List<int>();
-			
-			var entities = RepoAlumnos.GetFiltered(p => ids.Contains(p.Id)).GetLazyList();
+
+            var entities = RepoAlumnos.GetFiltered(p => ids.Contains(p.Id)).GetLazyList();
             foreach (var alumno in entities)
             {
 
-				// Validar con el código personalizado a nivel de Servicio de Aplicación y hacer acciones específicas
-				// previas a iniciar el seguimiento de esta entidad por parte de la Unidad de Trabajo.
-				if (!DeleteAlumnoPreTrack(alumno, result))
-				{
-					continue;
-				}
-				RepoAlumnos.Remove(alumno);
-				deleted.Add(alumno.Id);
-			}
+                // Validar con el código personalizado a nivel de Servicio de Aplicación y hacer acciones específicas
+                // previas a iniciar el seguimiento de esta entidad por parte de la Unidad de Trabajo.
+                if (!DeleteAlumnoPreTrack(alumno, result))
+                {
+                    continue;
+                }
+                RepoAlumnos.Remove(alumno);
+                deleted.Add(alumno.Id);
+            }
 
-			// Ejecutar procedimiento previo a la persitencia y posterior a la validación.
-			if (!DeleteAlumnosPreCommit(result))
-			{
-				return result;
-			}
-			
-			unirOfWork.Commit();
-			result.Value = deleted.ToArray();
+            // Ejecutar procedimiento previo a la persitencia y posterior a la validación.
+            if (!DeleteAlumnosPreCommit(result))
+            {
+                return result;
+            }
 
-			return result;
-		}
-		
+            unirOfWork.Commit();
+            result.Value = deleted.ToArray();
+
+            return result;
+        }
+
         public virtual ResultPrimitiveValue<int[]> CloneAlumnos(int[] ids)
         {
             var result = new ResultPrimitiveValue<int[]>();
@@ -191,7 +199,7 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
                 var alumno = RepoAlumnos.Get(id);
                 // Clonar
 
-            var alumnoNew = new Alumno
+                var alumnoNew = new Alumno
                 {
                     Nombres = alumno.Nombres,
                     Apellidos = alumno.Apellidos,
@@ -203,7 +211,7 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
                 {
                     continue;
                 }
-						
+
                 RepoAlumnos.Add(alumnoNew);
                 cloned.Add(alumnoNew);
             }
@@ -245,7 +253,7 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
         protected virtual void ModifyAlumnoPreAssign(AlumnoDto alumnoDto, Alumno persisted)
         {
         }
-		
+
         /// <summary>
         /// Si se sobreescribe este método, se garantiza su ejecución justo antes de acometerse los cambios del procedimiento Modify Alumno.
         /// </summary>
@@ -277,7 +285,7 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
         {
             return true;
         }
-		
+
         /// <summary>
         /// Si se sobreescribe este método, se garantiza su ejecución justo antes de acometerse los cambios del procedimiento Delete Alumno.
         /// </summary>
@@ -306,5 +314,5 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
         #endregion Persistencia
 
         #endregion Alumnos
-	}
+    }
 }
