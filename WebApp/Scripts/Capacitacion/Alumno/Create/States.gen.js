@@ -22,5 +22,6 @@ function loadAlumnoStateData(data) {
     }
     if (!isNull(data) && !isNull(data.FechaNacimiento)) {
         $('#txt-fecha-nacimiento').datepicker('setDate', Globalize.parseDateISOString(data.FechaNacimiento));
+        //$('#txt-fecha-nacimiento').datepicker('setDate', Globalize.parseDateUTCString(data.FechaNacimiento),);
     }
 }

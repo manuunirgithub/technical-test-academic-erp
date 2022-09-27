@@ -40,12 +40,12 @@ function loadAlumnosDataGrid() {
             pageData.tbAlumnos.table('block');
 
             let errors = new Array();
-            existsDateFrom = !isNull(params.FilterFechaNacimientoFrom);
+            /*existsDateFrom = !isNull(params.FilterFechaNacimientoFrom);
             existsDateTo = !isNull(params.FilterFechaNacimientoTo);
             if (existsDateFrom && existsDateTo
                 && params.FilterFechaNacimientoFrom > params.FilterFechaNacimientoTo) {
                 errors.push(Globalize.formatMessage("ErrorFechaNacimientoFueraRango"));
-            }
+            }*/
             //validateAlumnFilters(params, errors);
 
             if (!errors.length) {

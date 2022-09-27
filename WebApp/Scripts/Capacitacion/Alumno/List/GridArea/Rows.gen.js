@@ -11,8 +11,8 @@ function createAlumnoGridRow(rowData) {
     row.push('<input type="checkbox" />');
 
 	row.push('<span title="' + rowData.Id + '">' + summary(rowData.Id.toString(), 20, '...') + '</span>');
-    if (rowData.FechaNacimiento) {
-        row.push(Globalize.formatDateUsingMask(Globalize.parseDateISOString(rowData.FechaNacimiento)));
+    if (rowData._FechaNacimiento) {
+        row.push(Globalize.formatLocalTime(rowData._FechaNacimiento, 'YYYY-MM-DDTHH:mm:ss'));
     } else {
         row.push('');
     }

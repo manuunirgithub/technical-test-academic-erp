@@ -18,8 +18,27 @@ function loadAlumnoData() {
 			// Propiedades Escalares
 			$('#txt-nombres').val(data.Nombres);
 			$('#txt-apellidos').val(data.Apellidos);
-			$('#txt-fecha-nacimiento').datepicker('setDate',
-				data.FechaNacimiento ? Globalize.parseDateISOString(data.FechaNacimiento) : null);
+			$('#txt-fecha-nacimiento').datepicker('setDate',data.FechaNacimiento ? Globalize.formatDateUsingMask(Globalize.parseDateISOString(data.FechaNacimiento),'YYYY-MM-DD HH:mm:ss') : null);
+			//$('#txt-fecha-nacimiento').datepicker("option", "dateFormat", 'yy-mm-dd HH:mm:ss');
+			/*$('#txt-fecha-nacimiento').datepicker({
+                dateFormat: 'yy-dd-mm',
+                onSelect: function (datetext) {
+                    var d = new Date(); // for now
+
+                    var h = d.getHours();
+                    h = (h < 10) ? ("0" + h) : h;
+
+                    var m = d.getMinutes();
+                    m = (m < 10) ? ("0" + m) : m;
+
+                    var s = d.getSeconds();
+                    s = (s < 10) ? ("0" + s) : s;
+
+                    datetext = datetext + " " + h + ":" + m + ":" + s;
+
+                    $('#datepicker').val(datetext);
+                }
+            });*/
 			loadAlumnoState();
         },
         error: function(xhr) {

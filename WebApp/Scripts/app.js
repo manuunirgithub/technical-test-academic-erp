@@ -216,14 +216,26 @@ Globalize.formatDateToUTCISOString = function (date) {
         date.getUTCSeconds());
     return Globalize.formatDateToISOString(dateUtc);
 };
+
+Globalize.formatLocalTime = function (date, mask) {
+    var dateMoment = moment.utc(date).local().format(mask);
+    return dateMoment;
+};
+
 Globalize.parseDateISOString = function (isoString) {
     var dateMoment = moment(isoString, "YYYY-MM-DDTHH:mm:ss");
     return dateMoment.toDate();
 };
+
+Globalize.parseDateUTCString = function (isoString) {
+    var dateMoment = moment(isoString, "YYYY-MM-DDTHH:mm:ss").utc();
+    return dateMoment.toDate();
+};
+
 Globalize.formatDateUsingMask = function (date, mask) {
     var dateMoment = moment(date);
     if (mask) {
-        return dateMoment.format(mask);
+        return dateMoment.local().format(mask);
     }
     return dateMoment.format('DD/MM/YYYY');
 };

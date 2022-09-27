@@ -27,8 +27,20 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Dto.Alumnos
 		// Primitivas
 		public string Nombres { get; set; }		
 		public string Apellidos { get; set; }		
-		public DateTime? FechaNacimiento { get; set; }		
-	
+		public DateTime? FechaNacimiento { get; set; }
+
+		public virtual DateTime? _FechaNacimiento
+		{
+			get
+			{
+				return FechaNacimiento != null ? FechaNacimiento.Value.ToUniversalTime() : default(DateTime);
+			}
+			set
+			{
+				var x = value.Value.ToLocalTime();
+				FechaNacimiento = x;
+			}
+		}
 
 		public virtual string DisplayName
 		{

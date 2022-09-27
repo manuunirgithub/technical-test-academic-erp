@@ -12,7 +12,6 @@
 
 
 function validateAlumnFilters(params, errors) {
-    debugger;
     existsDateFrom = !isNull(params.FilterFechaNacimientoFrom);
     existsDateTo = !isNull(params.FilterFechaNacimientoTo);
     if (existsDateFrom && existsDateTo

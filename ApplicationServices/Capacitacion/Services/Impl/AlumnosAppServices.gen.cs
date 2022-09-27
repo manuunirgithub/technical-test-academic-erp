@@ -33,6 +33,10 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
         {
             var result = new ResultListDto<AlumnoDto>();
 
+            if (specification.FilterFechaNacimiento.From > specification.FilterFechaNacimiento.To)
+            {
+                result.Errors.Add("La Fecha [Desde] debe ser menor o igual a la Fecha [Hasta]");
+            }
             var lista = RepoAlumnos.GetPagedFiltered(specification);
 
             if (lista != null)
@@ -76,8 +80,18 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
             {
                 Nombres = alumno.Nombres,
                 Apellidos = alumno.Apellidos,
-                FechaNacimiento = alumno.FechaNacimiento,
+                FechaNacimiento= alumno._FechaNacimiento//.Value.ToUniversalTime()
             };
+
+            var test1 = alumno.FechaNacimiento.Value.ToLocalTime();
+            var test2 = alumno.FechaNacimiento.Value.ToUniversalTime();
+
+            //alumnoNew.FechaNacimiento = test1;
+            var a = DateTime.Now.ToUniversalTime();
+            var y = DateTime.Now.ToLocalTime();
+            
+            var u1 = DateTime.UtcNow.ToUniversalTime();
+            var u2 = DateTime.UtcNow.ToLocalTime();
 
             // Finalmente hacer las validaciones de Dominio (Definidas en las Entidades)
             var domainValidation = alumnoNew.Validate();
@@ -117,7 +131,6 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
             var result = new ResultValidation();
             var unitOfWork = RepoAlumnos.UnitOfWork;
 
-
             // Verificar estado de Persistencia.
             var persisted = RepoAlumnos.Get(alumno.Id);
             if (persisted == null)
@@ -131,14 +144,21 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Impl
             ModifyAlumnoPreAssign(alumno, persisted);
 
             // Asignar los valores.
+            string oldName = persisted.Nombres;
+
             persisted.Nombres = alumno.Nombres;
             persisted.Apellidos = alumno.Apellidos;
-            persisted.FechaNacimiento = alumno.FechaNacimiento;
+            persisted.FechaNacimiento= alumno._FechaNacimiento;
 
             // Finalmente hacer las validaciones de Dominio (Definidas en las Entidades)
             var domainValidation = persisted.Validate();
-            if (domainValidation.HasErrors)
+            bool existName = RepoAlumnos.GetFiltered(x => x.Nombres.ToLower().Equals(alumno.Nombres.ToLower())).HasAny();
+            if (domainValidation.HasErrors || existName)
             {
+                if (existName && !oldName.Equals(alumno.Nombres))
+                {
+                    domainValidation.AddValidationError($"El Nombre: {alumno.Nombres} fue registrado anteriormente, ingrese otro nombre.");
+                }
                 result.Type = ResultType.ElementConflict;
                 result.LoadFromDomainResult(domainValidation);
                 return result;

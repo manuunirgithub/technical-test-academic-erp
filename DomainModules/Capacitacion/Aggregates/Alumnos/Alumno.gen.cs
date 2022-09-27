@@ -30,25 +30,30 @@ namespace Unir.ErpAcademico.DomainModules.Capacitacion.Aggregates.Alumnos
 		/// Descripción de Nombres
 		/// </summary>
 		[Alias("Nombres")]
-		[StringLength(100, 
-                      ErrorMessageResourceType = typeof(DomainCommonStrings), 
-                      ErrorMessageResourceName = "ErrorValidationStringLenght")]
+		[StringLength(100,
+					  ErrorMessageResourceType = typeof(DomainCommonStrings),
+					  ErrorMessageResourceName = "ErrorValidationStringLenght")]
 		public string Nombres { get; set; }
-		
+
 		/// <summary>
 		/// Descripción de Apellidos
 		/// </summary>
 		[Alias("Apellidos")]
-		[StringLength(100, 
-                      ErrorMessageResourceType = typeof(DomainCommonStrings), 
-                      ErrorMessageResourceName = "ErrorValidationStringLenght")]
+		[StringLength(100,
+					  ErrorMessageResourceType = typeof(DomainCommonStrings),
+					  ErrorMessageResourceName = "ErrorValidationStringLenght")]
 		public string Apellidos { get; set; }
-		
+
 		/// <summary>
 		/// Descripción de FechaNacimiento
 		/// </summary>
 		[Alias("Fecha de Nacimiento")]
 		public DateTime? FechaNacimiento { get; set; }
-		
+
+
 	}
+		
+			
+
+	
 }

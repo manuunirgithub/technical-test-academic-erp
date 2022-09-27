@@ -17,7 +17,7 @@ function loadData() {
 			// Propiedades Escalares
             $('#lb-nombres').text(data.Nombres ? data.Nombres : '-');
             $('#lb-apellidos').text(data.Apellidos ? data.Apellidos : '-');
-            $('#lb-fecha-nacimiento').text(data.FechaNacimiento ? Globalize.formatDateUsingMask(Globalize.parseDateISOString(data.FechaNacimiento)) : '-');
+            $('#lb-fecha-nacimiento').text(data._FechaNacimiento ? Globalize.formatLocalTime(data._FechaNacimiento, 'YYYY-MM-DDTHH:mm:ss') : '-');
         },
         error: function(xhr) {
             $.unblockUI();

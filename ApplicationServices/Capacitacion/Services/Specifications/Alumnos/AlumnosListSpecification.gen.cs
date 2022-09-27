@@ -58,12 +58,21 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Specificat
 
                     // Nombre Completo (Nombres y Apellidos)
                     if (!string.IsNullOrEmpty(FilterNombresApellidos))
-                        filterSpec &= new DirectSpecification<Alumno>(
+                    {
+
+                        filterSpec &= new DirectSpecification<Alumno>(a => (
+                                /*a.Nombres.ToLower().Contains(FilterNombresApellidos.ToLower()) ||
+                                a.Apellidos.ToLower().Contains(FilterNombresApellidos.ToLower()) ||*/
+                                (a.Nombres.ToLower() + " "+ a.Apellidos.ToLower()).Contains(FilterNombresApellidos.ToLower())
+                        ));
+                        /*filterSpec &= new DirectSpecification<Alumno>(
                                 a => (
-                                    a.Nombres.ToLower().Contains(FilterNombresApellidos.ToLower()) || 
-                                    a.Apellidos.ToLower().Contains(FilterNombresApellidos.ToLower())
+                                    a.Nombres.ToLower().Contains(FilterNombresApellidos.ToLower()) ||
+                                    a.Apellidos.ToLower().Contains(FilterNombresApellidos.ToLower()) 
                                 )
-                         );
+                         );*/
+                    }
+
 
 
                     // *** Filters de Rango (Range Filters)
@@ -97,7 +106,7 @@ namespace Unir.ErpAcademico.ApplicationServices.Capacitacion.Services.Specificat
                         Id = a.Id,
                         Nombres = a.Nombres,
                         Apellidos = a.Apellidos,
-                        FechaNacimiento = a.FechaNacimiento,
+                        _FechaNacimiento = a.FechaNacimiento,
                     }));
             }
             set

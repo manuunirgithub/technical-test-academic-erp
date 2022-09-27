@@ -26,9 +26,9 @@ namespace Unir.ErpAcademico.DomainModules.Capacitacion.Aggregates.Alumnos
         {
             var result= base.Validate();
 
-            if (FechaNacimiento.Value.Year < 1990)
+            if (FechaNacimiento.Value.Year < 1901)
             {
-                result.AddValidationError("Fecha de nacimiento no puede ser menor al año 1990");
+                result.AddValidationError("Fecha de nacimiento no puede ser menor al año 1901");
             }
             return result;
                 
